@@ -1,0 +1,10 @@
+{
+  "name": "my-glok-app",
+  "version": "1.0.0",
+  "description": "A short description of my app",
+  "platform": "desktop",
+  "entry": "dist/index.js",
+  "permissions": [],
+  "developer": "your-developer-id",
+  "icon": "icon.png"
+}

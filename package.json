@@ -1,0 +1,58 @@
+{
+  "name": "glok-cli",
+  "version": "1.0.0",
+  "description": "Official CLI tool for packaging and submitting apps to the Glok Store",
+  "keywords": [
+    "glok",
+    "glok-store",
+    "cli",
+    "packaging",
+    "glok-cli"
+  ],
+  "homepage": "https://github.com/TA-wiah/Glok-MarketPlace/tree/main/CLI-npm",
+  "bugs": {
+    "url": "https://github.com/TA-wiah/Glok-MarketPlace/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TA-wiah/Glok-MarketPlace.git",
+    "directory": "CLI-npm"
+  },
+  "license": "MIT",
+  "author": "Glok Team",
+  "main": "dist/index.js",
+  "bin": {
+    "glok": "./bin/glok.js"
+  },
+  "files": [
+    "bin/",
+    "dist/",
+    "templates/",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint \"src/**/*.ts\"",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "archiver": "^7.0.1",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "inquirer": "^9.3.7",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
+    "@types/archiver": "^6.0.3",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.14.0",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
