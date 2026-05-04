@@ -1,6 +1,6 @@
 {
   "name": "glok-cli",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Official CLI tool for packaging and submitting apps to the Glok Store",
   "keywords": [
     "glok",
