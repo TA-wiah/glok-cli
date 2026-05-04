@@ -9,7 +9,7 @@ interface InitAnswers {
   name: string;
   version: string;
   description: string;
-  platform: Platform;
+  platforms: Platform[];
   entry: string;
   developer: string;
 }
@@ -38,13 +38,15 @@ export async function initCommand(): Promise<void> {
       message: 'Description (optional):',
     },
     {
-      type: 'list',
-      name: 'platform',
-      message: 'Target platform:',
+      type: 'checkbox',
+      name: 'platforms',
+      message: 'Target platforms (space to select, enter to confirm):',
       choices: [
-        { name: 'Desktop (.glok)', value: 'desktop' },
-        { name: 'Mobile / Web (.glk)', value: 'mobile' },
+        { name: 'Desktop (.glok)', value: 'desktop', checked: true },
+        { name: 'Mobile (.glk)', value: 'mobile' },
       ],
+      validate: (v: Platform[]) =>
+        v.length > 0 || 'Select at least one platform.',
     },
     {
       type: 'input',
@@ -63,7 +65,7 @@ export async function initCommand(): Promise<void> {
   const manifest: Manifest = {
     name: answers.name.trim(),
     version: answers.version.trim(),
-    platform: answers.platform,
+    platforms: answers.platforms,
     entry: `dist/${answers.entry.trim()}`,
     permissions: [],
     developer: answers.developer.trim(),
@@ -109,7 +111,7 @@ export async function initCommand(): Promise<void> {
   }
 
   logger.blank();
-  logger.success(`Project "${manifest.name}" initialized!`);
+  logger.success(`Project "${manifest.name}" initialized for platforms: ${manifest.platforms.join(', ')}!`);
   logger.info(`Next steps:`);
   logger.info(`  1. Add your compiled app files to ./dist/`);
   logger.info(`  2. Run: glok build`);

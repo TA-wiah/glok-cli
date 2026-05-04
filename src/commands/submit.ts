@@ -3,7 +3,7 @@ import AdmZip from 'adm-zip';
 import { logger } from '../utils/logger.js';
 import { readJson, fileExists } from '../utils/fs.js';
 import { getPublicKeyPath } from '../services/keyManager.js';
-import { Manifest, PACKAGE_EXTENSION } from '../utils/types.js';
+import { Manifest, PACKAGE_EXTENSION, resolvePlatforms } from '../utils/types.js';
 import fs from 'fs';
 import { encodeBase64 } from 'tweetnacl-util';
 
@@ -23,10 +23,19 @@ export async function submitCommand(options: SubmitOptions): Promise<void> {
   }
 
   const manifest = readJson<Partial<Manifest>>(manifestPath);
-  const platform = manifest.platform ?? 'desktop';
+  const platforms = resolvePlatforms(manifest);
+  const platform = platforms[0];
   const ext = PACKAGE_EXTENSION[platform];
   const safeName = (manifest.name ?? 'app').replace(/[^a-z0-9_-]/gi, '-').toLowerCase();
   const version = manifest.version ?? '1.0.0';
+
+  if (platforms.length > 1 && !options.package) {
+    logger.warn(
+      `Multiple platforms detected (${platforms.join(', ')}). ` +
+      `Submitting the ${platform} package (${ext}). ` +
+      `Use --package <file> to specify a different platform's package.`,
+    );
+  }
 
   const packagePath = path.resolve(options.package ?? path.join(projectDir, `${safeName}-${version}${ext}`));
 
@@ -74,7 +83,7 @@ export async function submitCommand(options: SubmitOptions): Promise<void> {
   const payload = {
     name: manifest.name,
     version: manifest.version,
-    platform: manifest.platform,
+    platforms: platforms,
     developer: manifest.developer,
     description: manifest.description ?? '',
     permissions: manifest.permissions ?? [],

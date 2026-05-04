@@ -3,7 +3,7 @@ import { logger } from '../utils/logger.js';
 import { readJson, writeFile, fileExists } from '../utils/fs.js';
 import { keysExist, generateKeyPair, loadKeyPair, getPublicKeyPath } from '../services/keyManager.js';
 import { signFile } from '../services/signer.js';
-import { Manifest, PACKAGE_EXTENSION } from '../utils/types.js';
+import { Manifest, PACKAGE_EXTENSION, resolvePlatforms } from '../utils/types.js';
 
 interface SignOptions {
   package?: string;
@@ -45,7 +45,7 @@ export async function signCommand(options: SignOptions): Promise<void> {
       process.exit(1);
     }
     const manifest = readJson<Partial<Manifest>>(manifestPath);
-    const platform = manifest.platform ?? 'desktop';
+    const platform = resolvePlatforms(manifest)[0];
     const ext = PACKAGE_EXTENSION[platform];
     const safeName = (manifest.name ?? 'app').replace(/[^a-z0-9_-]/gi, '-').toLowerCase();
     const version = manifest.version ?? '1.0.0';

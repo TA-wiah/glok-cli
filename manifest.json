@@ -1,0 +1,9 @@
+{
+  "name": "PayNova",
+  "version": "1.0.0",
+  "platform": "desktop",
+  "entry": "dist/index.js",
+  "permissions": [],
+  "developer": "Jeffrey Tottimeh",
+  "icon": "icon.png"
+}

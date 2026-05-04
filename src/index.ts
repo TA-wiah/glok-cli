@@ -31,7 +31,7 @@ program
 
 program
   .command('package')
-  .description('Package your app into a .glok (desktop) or .glk (mobile/web) archive')
+  .description('Package your app into .glok (desktop) and/or .glk (mobile) archives — one per platform')
   .option('-o, --output <file>', 'Output file path (default: <name>-<version>.<ext>)')
   .option('--no-sign', 'Skip including signature.sig even if present')
   .action(async (opts: { output?: string; sign: boolean }) => {

@@ -6,7 +6,7 @@ import { logger } from '../utils/logger.js';
 import { fileExists } from '../utils/fs.js';
 import { validateManifest } from '../services/validator.js';
 import { loadPublicKey } from '../services/keyManager.js';
-import { Manifest } from '../utils/types.js';
+import { Manifest, resolvePlatforms } from '../utils/types.js';
 
 interface VerifyOptions {
   package: string;
@@ -127,7 +127,7 @@ export async function verifyCommand(options: VerifyOptions): Promise<void> {
 
   logger.blank();
   logger.success(`Package "${path.basename(packagePath)}" passed verification.`);
-  logger.info('Platform: ' + (manifest.platform ?? 'unknown'));
+  logger.info('Platforms: ' + resolvePlatforms(manifest).join(', '));
   logger.info('Version:  ' + (manifest.version ?? 'unknown'));
   logger.blank();
 }

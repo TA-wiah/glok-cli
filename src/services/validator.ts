@@ -1,4 +1,4 @@
-import { Manifest, REQUIRED_MANIFEST_FIELDS } from '../utils/types.js';
+import { Manifest, REQUIRED_MANIFEST_FIELDS, resolvePlatforms } from '../utils/types.js';
 
 export interface ValidationResult {
   valid: boolean;
@@ -16,8 +16,22 @@ export function validateManifest(manifest: Partial<Manifest>): ValidationResult 
     }
   }
 
-  if (manifest.platform && !['desktop', 'mobile'].includes(manifest.platform)) {
-    errors.push(`Invalid platform "${manifest.platform}". Must be "desktop" or "mobile".`);
+  // Validate that at least one platform is specified (new or legacy field)
+  const platforms = resolvePlatforms(manifest);
+  if (platforms.length === 0) {
+    errors.push('At least one platform must be specified in "platforms" (or the legacy "platform" field).');
+  } else {
+    for (const p of platforms) {
+      if (!['desktop', 'mobile'].includes(p)) {
+        errors.push(`Invalid platform "${p}". Each entry must be "desktop" or "mobile".`);
+      }
+    }
+  }
+
+  if (manifest.platform && !manifest.platforms) {
+    warnings.push(
+      'The "platform" field is deprecated. Migrate to "platforms": ["desktop"] (or ["mobile"], or both).',
+    );
   }
 
   if (manifest.version && !/^\d+\.\d+\.\d+/.test(manifest.version)) {
