@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TA-wiah/glok-cli.git",
+    "url": "git+https://github.com/TA-wiah/glok-cli.git",
     "directory": "CLI-npm"
   },
   "license": "MIT",
   "author": "Glok Team",
   "main": "dist/index.js",
   "bin": {
-    "glok": "./bin/glok.js"
+    "glok": "bin/glok.js"
   },
   "files": [
     "bin/",
