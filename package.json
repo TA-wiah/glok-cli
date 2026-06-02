@@ -9,13 +9,13 @@
     "packaging",
     "glok-cli"
   ],
-  "homepage": "https://github.com/TA-wiah/Glok-MarketPlace/tree/main/CLI-npm",
+  "homepage": "https://github.com/TA-wiah/glok-cli/tree/main/CLI-npm",
   "bugs": {
-    "url": "https://github.com/TA-wiah/Glok-MarketPlace/issues"
+    "url": "https://github.com/TA-wiah/glok-cli/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TA-wiah/Glok-MarketPlace.git",
+    "url": "https://github.com/TA-wiah/glok-cli.git",
     "directory": "CLI-npm"
   },
   "license": "MIT",
